@@ -1,0 +1,22 @@
+## folders
+logs/
+build/
+dist/
+simpati.egg-info/
+simpati.egg-info
+__pycache__/
+
+## files
+*.pyc
+*.swp
+
+.coverage
+.vscode
+.idea
+.noseids
+*.db
+.idea/
+.tox/
+doc/api/epydoc/html/
+.vscode/
+.venv
