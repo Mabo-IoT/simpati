@@ -63,7 +63,7 @@ class Test_response(unittest.TestCase):
         self.assertIsInstance(res1, Response)
         self.assertEqual(res1.contents, b'1\xb6(002)Act. value defect  EK1/X22        ')
     
-    def test_types(self):
+    def test_error(self):
         """
         test Response types property func
         """
@@ -79,7 +79,7 @@ class Test_response(unittest.TestCase):
         res = Response.make_response(bytes_data)
         self.assertEqual(res.error, "unknow error code -9")
 
-    def test_error(self):
+    def test_types(self):
         """
         test Response error property func
         """
@@ -90,14 +90,28 @@ class Test_response(unittest.TestCase):
         bytes_data = b'-1\r\n'
         res = Response.make_response(bytes_data)
         self.assertEqual(res.types, "error")
+    
+    def test_data(self):
+        """
+        test Response data property func
+        """
+        bytes_data = b'1\xb630.000000\r\n'
+        res = Response.make_response(bytes_data)
+        self.assertEqual(res.data, "30.000000")
 
+        bytes_data = b'1\xb6(002)Act. value defect  EK1/X22        \r\n'
+        res = Response.make_response(bytes_data)
+        self.assertEqual(res.data, "(002)Act. value defect  EK1/X22        ")
 
+        bytes_data = b'-1\r\n'
+        res = Response.make_response(bytes_data)
+        self.assertEqual(res.data, None)
 
 if __name__ == '__main__':
     suite = unittest.TestSuite()
     tests = [Test_request("test_convert_fmt"),Test_request("test_bytes"), Test_response("test_make_response"),Test_response("test_types"),
-    Test_response("test_error")]
-    
+    Test_response("test_error"), Test_response("test_data"), ]
+
     suite.addTests(tests)
 
     runner = unittest.TextTestRunner(verbosity=2)

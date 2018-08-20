@@ -52,11 +52,24 @@ class Response:
             "-6": "Insufficient number or wrong command parameters",
             "-7": "No server (in server service command mode)",
         }
-        
+
         if self.types == "error":
             error_code = self.contents[:2].decode()
             
             return error_dict.get(error_code, "unknow error code {}".format(error_code))
+
+        else:
+            return None
+
+    @property
+    def data(self):
+        """
+        if type is data, need know data text
+        '1\xb630.000000
+        """
+        if self.types == "data":
+            data  = self.contents.split(b'\xb6')[1].decode() # data is split by sperator
+            return data
 
         else:
             return None
