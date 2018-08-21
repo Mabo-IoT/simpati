@@ -10,21 +10,26 @@ CR = int(13)
 
 
 class Response:
-    def __init__(self, contents):
+    def __init__(self, contents, cmd, charmber_index, *args):
         """
         all params in bytes
         """
         self.contents = contents
+        self.cmd = cmd
+        self.charmber_index = charmber_index
+        self.num = args[0]
 
     @classmethod   
-    def make_response(cls, bytes_data):
+    def make_response(cls, bytes_data, cmd, charmber_index, *args):
         """
         make response by classmethod
         """
         bytes_list = bytes_data.split(b'\r')
         contents = bytes_list[0]
-
-        return cls(contents)
+        if contents:
+            return cls(contents, cmd, charmber_index, *args)
+        else:
+            raise NoneDataException("None data is recevied, please check Server connection.")
     
     @property
     def types(self):
@@ -68,8 +73,14 @@ class Response:
         '1\xb630.000000
         """
         if self.types == "data":
+            print(self.contents)
             data  = self.contents.split(b'\xb6')[1].decode() # data is split by sperator
+            
             return data
 
         else:
             return None
+
+
+class NoneDataException(Exception):
+    pass
