@@ -26,7 +26,7 @@ class simpatiHandler(BaseRequestHandler):
         parse msg to requset
         """
         cmd = msg.split(SR)[0].decode()
-        if cmd == "17009":
+        if cmd == "17009" or cmd == "14003":
             return self.random_status()
         
         else:
