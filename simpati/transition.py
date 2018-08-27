@@ -31,6 +31,12 @@ class Transition:
         data = self.reader.read(1024)
         return data
     
+    def close(self):
+        """
+        close connection
+        """
+        self.writer.close()
+    
 
 
     

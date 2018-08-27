@@ -16,7 +16,7 @@ class Response:
         """
         self.contents = contents
         self.cmd = cmd
-        self.charmber_index = charmber_index
+        self.chamber_index = charmber_index
         self.num = args[0]
 
     @classmethod   
